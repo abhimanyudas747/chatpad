@@ -1,0 +1,11 @@
+.chatbox{
+    background-color: darkgoldenrod;
+    height: 87%;   
+    overflow-y: scroll;
+    width: 100%;
+    padding: 2%;
+    
+}
+.chatbox::-webkit-scrollbar{
+    display: none;
+}

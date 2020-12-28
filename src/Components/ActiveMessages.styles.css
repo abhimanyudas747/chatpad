@@ -1,0 +1,19 @@
+.preview-holder{
+    margin-top: 5px;
+    overflow-y: scroll;
+    max-height: 93%;
+    width: 100%;
+    background-color: coral;
+    
+}
+
+.preview-holder::-webkit-scrollbar{
+    background: white;
+    width: 5px;
+}
+
+.preview-holder::-webkit-scrollbar-thumb{
+    background: rgba(90,90,90,0.5)
+    
+}
+

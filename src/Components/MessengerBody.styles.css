@@ -1,0 +1,7 @@
+.messengerbody{
+    height: 100%;
+    width: 70%;
+    float: right;
+    background-color: rgb(19, 133, 95);
+    flex-flow: column;
+}

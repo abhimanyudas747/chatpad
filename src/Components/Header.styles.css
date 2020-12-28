@@ -1,0 +1,27 @@
+.header{
+    background-color: antiquewhite;
+    height: 7%;
+    padding: 5px;
+    min-height: 60px;
+
+}
+
+
+.useravatar{
+    height: 50px;
+    background-color: aqua;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+.logout-btn{
+    border-radius: 50px;
+}
+
+.logout-btn:active{
+    background-color: rgb(146, 138, 128);
+}
+
+.logout-btn:hover{
+    cursor: pointer;
+}

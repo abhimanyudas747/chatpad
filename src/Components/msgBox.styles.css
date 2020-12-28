@@ -1,0 +1,20 @@
+.msgbox{
+    width: fit-content;
+    max-width: 50%;
+    border-radius: 50px;
+    padding: 10px;
+    clear: both;
+    word-wrap: break-word;
+    margin-bottom: 5px;
+}
+
+.outer{
+    background-color: bisque;
+}
+
+.timestamp{
+    margin-left: 10px;
+    float: right;
+    font-size: 10px;
+    margin-top: 16px;
+}

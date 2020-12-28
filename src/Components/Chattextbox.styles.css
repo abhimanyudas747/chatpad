@@ -1,0 +1,29 @@
+.chattextbox{
+    height: 56px;
+    background-color: blueviolet;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+
+
+.textbox{
+    width: 90%;
+    height: 40px;
+    background-color: lightblue;
+    overflow: hidden;
+    border-radius: 50px;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+
+.send-button{
+    margin-right: 1%;
+    border-radius: 50px;
+}
+
+.send-button:active{
+    background-color: rgb(93, 28, 153);
+}

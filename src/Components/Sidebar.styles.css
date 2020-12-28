@@ -1,0 +1,58 @@
+.sidebar{
+    height: 100%;
+    background-color: aquamarine;
+    width: 30%;
+    float: left;
+}
+
+.menu-list{
+    height: 7%;
+    background-color: bisque;
+    min-height: 60px;
+}
+
+
+.avatar{
+    height: 100%;
+    border-radius: 100%;
+    padding: 10px;
+    float: left;
+}
+
+.menus{
+    height: 100%;
+    float: right;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 35%;
+}
+
+.search-holder{
+    height: 6%;
+    padding: 2%;
+    border-bottom: 1px lightgreen solid;
+}
+
+.searchbar{
+    border-radius: 50px;
+    padding: 8px;
+    background-color: aqua;
+    overflow: hidden;
+    width: 100%;
+
+}
+
+.menu-icons:active{
+    background-color: rgb(139, 127, 112);
+}
+
+.menu-icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    border-radius: 50px;
+}

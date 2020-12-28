@@ -1,0 +1,19 @@
+.message-prev{
+    height: 20%;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px lightgray solid;
+    background-color: azure;
+    padding: 5px;
+}
+
+.message-prev:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.avatar-img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+}
