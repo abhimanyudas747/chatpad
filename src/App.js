@@ -22,6 +22,7 @@ const App = (props)  => {
     console.log("Mounted")
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if(user){
+        console.log(user)
         dispatch(setUser(user))
         setDisplay(<Main />)
       }

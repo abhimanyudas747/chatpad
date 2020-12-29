@@ -19,7 +19,7 @@ FormControl{
 }
 
 .signuplink{
-    margin-top: 5px;
+    margin-top: 10px;
     color: rgb(102, 114, 201);
     font-weight: 500;
 }
@@ -27,4 +27,13 @@ FormControl{
 .signuplink:hover{
     cursor: pointer;
 
+}
+
+.uploadlink{
+    color: green;
+    font-weight: 500
+}
+
+.uploadlink:hover{
+    cursor: pointer;
 }

@@ -13,7 +13,7 @@ const Header = (props) => {
     const lastseen = useSelector((state) => state.messengerBodyReducer.activeChatusr.lastseen)
     const logout = () => {
         auth.signOut().then(
-            () => dispatch(setUser(undefined)),
+            () => dispatch(setUser({})),
             () => alert('Logout failed')
         )
     }

@@ -5,9 +5,13 @@ import {BsSearch, BsChatDots, BsThreeDotsVertical} from 'react-icons/bs'
 import {MdCancel} from 'react-icons/md'
 import {FiMenu} from 'react-icons/fi'
 import ActiveMessages from './ActiveMessages'
+import defaultAvatar from '../defaultAvatar.png'
+import {useSelector} from 'react-redux';
 
 const Sidebar = (props) => {
-    const [userAvatar, setUserAvatar] = useState("https://i.pinimg.com/originals/2d/0f/50/2d0f50e8e4f6b233c7cf70b4bd36f89c.png")
+    
+    const userAvatar = useSelector((state) => state.appReducer.currentUser.photoURL)
+    const userDisplayname = useSelector((state) => state.appReducer.currentUser.displayName)
     const [searchVisible, setSearchVisible] = useState(true)
     const [searchFocus, setSearchFocus] = useState(false)
     useEffect(() => {
@@ -21,6 +25,10 @@ const Sidebar = (props) => {
             <div className="menu-list">
 
                 <img className="avatar" src={userAvatar} />
+                <div style={{height: "100%", display: "flex",float: "left", alignItems: "center"}}>
+                    <h1 style={{fontSize: "16px", fontWeight: "700", marginLeft: "5px"}}>{userDisplayname}</h1>
+                </div>
+                
                 <div className="menus">
                     <div className="menu-icons">
                         <BsSearch onClick={() => {setSearchVisible(!searchVisible)}} size={25}/>
