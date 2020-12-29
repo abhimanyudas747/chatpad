@@ -3,12 +3,21 @@ import './Header.styles.css';
 import {Row, Col} from 'react-bootstrap';
 import {connect, useSelector, useDispatch} from 'react-redux';
 import {BiLogOutCircle} from 'react-icons/bi'
+import {auth} from '../firebase'
+import {setUser} from '../actions/Login.actions'
 
 const Header = (props) => {
+    const dispatch = useDispatch();
     const fullName = useSelector((state) => state.messengerBodyReducer.activeChatusr.fullName)
     const userAvatar = useSelector((state) => state.messengerBodyReducer.activeChatusr.userAvatar)
     const lastseen = useSelector((state) => state.messengerBodyReducer.activeChatusr.lastseen)
-    
+    const logout = () => {
+        auth.signOut().then(
+            () => dispatch(setUser(undefined)),
+            () => alert('Logout failed')
+        )
+    }
+
 
     return (
         <>
@@ -29,7 +38,7 @@ const Header = (props) => {
                         
                     </Col>
                     <Col sm={5} >
-                        <BiLogOutCircle className="logout-btn" style={{float: "right", marginTop: "3%", marginRight: "2%"}} size={35} />
+                        <BiLogOutCircle onClick={logout} className="logout-btn" style={{float: "right", marginTop: "3%", marginRight: "2%"}} size={35} />
                     </Col>
                 </Row>
                 

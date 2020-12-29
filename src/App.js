@@ -2,12 +2,44 @@ import logo from './logo.svg';
 import './App.css';
 import Main from './Components/main.jsx'
 import Login from './Components/Login'
+import {useSelector, useDispatch} from 'react-redux'
+import {auth} from './firebase';
+import { useEffect, useState } from 'react';
+import {setUser} from './actions/Login.actions'
 
-function App() {
+
+
+const App = (props)  => {
+  
+
+  const dispatch = useDispatch();
+  const userloggedin = useSelector((state) => state.appReducer.currentUser)
+  const [display, setDisplay] = useState(<Login />)
+  
+
+  
+  useEffect(() => {
+    console.log("Mounted")
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if(user){
+        dispatch(setUser(user))
+        setDisplay(<Main />)
+      }
+      else{
+        setDisplay(<Login />)
+      }
+    })
+
+    return () => {unsubscribe()};
+  }, [])
+  
+  
+  
   return (
     <div className="App">
-      <Main />
-      {/* <Login /> */}
+      
+      {display}
+
     </div>
   );
 }

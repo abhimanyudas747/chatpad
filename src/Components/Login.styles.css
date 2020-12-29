@@ -1,5 +1,5 @@
 .login{
-    height: 30%;
+    height: fit-content;
     width: 30%;
     background-color: thistle;
     display: flex;
