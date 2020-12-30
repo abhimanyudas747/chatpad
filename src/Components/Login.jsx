@@ -3,8 +3,8 @@ import './Login.styles.css'
 import {Form, Button, Image} from 'react-bootstrap'
 import {auth, provider, storageRef} from '../firebase'
 import {setUser} from '../actions/Login.actions'
-import defaultAvatar from '../defaultAvatar.png'
 import { useDispatch } from 'react-redux'
+import {db} from '../firebase'
 
 const Login = (props) => {
     
@@ -45,7 +45,16 @@ const Login = (props) => {
                         displayName: name,
                         photoURL: avatar
                     })
-                    .then(() => {dispatch(setUser(auth.currentUser))})
+                    .then(() => {
+                        dispatch(setUser(auth.currentUser));
+                        db.collection('Users').doc(auth.currentUser.uid).set({
+                            email: auth.currentUser.email,
+                            displayName: auth.currentUser.displayName,
+                            avatarUrl: auth.currentUser.photoURL
+                        })
+                    })
+
+
                     
                     
                 }

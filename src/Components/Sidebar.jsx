@@ -5,8 +5,9 @@ import {BsSearch, BsChatDots, BsThreeDotsVertical} from 'react-icons/bs'
 import {MdCancel} from 'react-icons/md'
 import {FiMenu} from 'react-icons/fi'
 import ActiveMessages from './ActiveMessages'
-import defaultAvatar from '../defaultAvatar.png'
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {db, auth} from '../firebase'
+import {setUserList} from '../actions/sidebarActions'
 
 const Sidebar = (props) => {
     
@@ -14,9 +15,19 @@ const Sidebar = (props) => {
     const userDisplayname = useSelector((state) => state.appReducer.currentUser.displayName)
     const [searchVisible, setSearchVisible] = useState(true)
     const [searchFocus, setSearchFocus] = useState(false)
-    useEffect(() => {
-        console.log(searchVisible)
-    })
+    const newchatref = useSelector((state) => state.sidebarReducer.newChatcomponentref)
+    const dispatcher = useDispatch();
+    useEffect(async() => {
+        var userlistlocal = Array(0)
+        const userlst = await db.collection('Users').get()
+        userlst.forEach(
+            usr => {if(usr.id != auth.currentUser.uid){
+                //console.log(usr.id === auth.currentUser.uid)
+                userlistlocal.push(usr.data())
+            }}
+        )
+        dispatcher(setUserList(userlistlocal))
+    }, [])
 
 
     return (
@@ -34,7 +45,7 @@ const Sidebar = (props) => {
                         <BsSearch onClick={() => {setSearchVisible(!searchVisible)}} size={25}/>
                     </div>
                     <div className="menu-icons">
-                        <BsChatDots size={25}/>
+                        <BsChatDots onClick={() => {newchatref.current.style.width = "30%"}} size={25}/>
                     </div>
                     <div className="menu-icons">
                         <BsThreeDotsVertical size={25}/>
@@ -63,7 +74,7 @@ const Sidebar = (props) => {
                 
             </Collapse>
             
-            <ActiveMessages />
+            <ActiveMessages parent="sidebar" />
         </div>
         </>
     )

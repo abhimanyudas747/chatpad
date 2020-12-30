@@ -1,0 +1,52 @@
+.newchatsidebar{
+    height: 100%;
+    background-color: rgb(104, 184, 157);
+    width: 30%;
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+    width: 0%;
+    transition: 0.3s;
+}
+
+
+.newchatsearch-holder{
+    height: 6%;
+    padding: 2%;
+    border-bottom: 1px lightgreen solid;
+}
+
+.newchatsearchbar{
+    border-radius: 50px;
+    padding: 8px;
+    background-color: aqua;
+    overflow: hidden;
+    width: 100%;
+}
+
+
+.newchatmenu-list{
+    height: 7%;
+    background-color: bisque;
+    min-height: 60px;
+}
+
+.newchatcancelbtn{
+    float: right;
+    border-radius: 50px;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.newchatcancelbtn:active{
+    background-color: rgb(165, 145, 121);
+    transition: 0.2s;
+    
+}
+
+.newchatcancelbtn:hover{
+    cursor: pointer;
+}

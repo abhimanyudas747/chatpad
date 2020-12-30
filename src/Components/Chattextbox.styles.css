@@ -8,6 +8,7 @@
 }
 
 
+
 .textbox{
     width: 90%;
     height: 40px;
@@ -19,11 +20,15 @@
 }
 
 
+
 .send-button{
     margin-right: 1%;
     border-radius: 50px;
 }
 
+
+
 .send-button:active{
     background-color: rgb(93, 28, 153);
+    transition: 0.2s;
 }

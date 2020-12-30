@@ -3,7 +3,7 @@ import './App.css';
 import Main from './Components/main.jsx'
 import Login from './Components/Login'
 import {useSelector, useDispatch} from 'react-redux'
-import {auth} from './firebase';
+import {auth, db} from './firebase';
 import { useEffect, useState } from 'react';
 import {setUser} from './actions/Login.actions'
 
@@ -31,7 +31,9 @@ const App = (props)  => {
       }
     })
 
-    return () => {unsubscribe()};
+    return () => {
+      unsubscribe()
+    };
   }, [])
   
   

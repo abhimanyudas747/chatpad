@@ -20,6 +20,7 @@
 
 .logout-btn:active{
     background-color: rgb(146, 138, 128);
+    transition: 0.2s;
 }
 
 .logout-btn:hover{
