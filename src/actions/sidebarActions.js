@@ -8,3 +8,13 @@ export const setUserList = (userlist) => ({
     type: "SET_USER_LIST",
     userList: userlist
 })
+
+
+export const setActiveMessages = (activeMessages) =>{
+    console.log("ACTMSGS")
+    console.log(activeMessages)
+    return ({
+        type: "SET_ACTIVE_MESSAGES",
+        activeMessages: activeMessages
+    })
+}

@@ -2,16 +2,26 @@ import {useState, useEffect} from 'react';
 import './MessagePrev.styles.css';
 import {Row, Col} from 'react-bootstrap';
 import {useDispatch} from 'react-redux';
-import {setActiveChat} from '../actions/messagePrev.actions'
+import {setActiveChat, setChats} from '../actions/messagePrev.actions'
+import {db, auth} from '../firebase'
 
 const MessagePrev = (props) => {
 
     const dispatch = useDispatch();
+
+    const handleSubmit = async() => {
+        dispatch(setActiveChat(props))
+        // console.log(props)
+        // const prevChats = await db.collection('Chats').where('sender' , '==', auth.currentUser.uid).where('receiver', '==', props.uid).orderBy('timestamp').get();
+        // const chatarray = []
+        // prevChats.forEach((chat) => chatarray.push(chat.data()))
+        // dispatch(setChats(chatarray))
+    }
     
 
     return (
         <>
-        <div onClick={() => dispatch(setActiveChat(props))} className="message-prev">
+        <div onClick={handleSubmit} className="message-prev">
             <Row style={{height: "100%"}}>
                 <Col sm={2}>
                     <img src={props.avatarUrl} className="avatar-img" />

@@ -1,8 +1,9 @@
 const initialState = {
     activeChatusr: {
-        fullName: '',
-        userAvatar: '',
-        lastseen: ''
+        displayName: '',
+        avatarUrl: '',
+        lastseen: '',
+        uid: ''
     },
     chats: []
 }
@@ -21,6 +22,18 @@ const messengerBodyReducer = (state = initialState, action) => {
             return {
                 ...state,
                 chats: newChats
+            }
+
+        case "SET_PREVCHATS":
+            return {
+                ...state,
+                chats: action.chats
+            }
+
+        case "CLEAR_ALL_STATES":
+            return {
+                activeChatusr: {},
+                chats: []
             }
             
     

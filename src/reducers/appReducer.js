@@ -10,6 +10,11 @@ const appReducer = (state=initialState, action) => {
                 ...state,
                 currentUser: action.user
             }
+
+        case "CLEAR_ALL_STATES":
+            return {
+                currentUser: {}
+            }
         default:
             return state
     }

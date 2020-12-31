@@ -19,6 +19,19 @@ const sidebarReducer = (state = initialState, action) => {
                 ...state,
                 userList: action.userList
             }
+
+        case 'SET_ACTIVE_MESSAGES':
+            return {
+                ...state,
+                activeMessages: action.activeMessages
+            }
+
+        case 'CLEAR_ALL_STATES':
+            return {
+                newChatcomponentref: undefined,
+                userList: [],
+                activeMessages: []
+            }
         
         default:
             return state;

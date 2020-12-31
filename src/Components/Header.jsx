@@ -8,8 +8,8 @@ import {setUser} from '../actions/Login.actions'
 
 const Header = (props) => {
     const dispatch = useDispatch();
-    const fullName = useSelector((state) => state.messengerBodyReducer.activeChatusr.fullName)
-    const userAvatar = useSelector((state) => state.messengerBodyReducer.activeChatusr.userAvatar)
+    const fullName = useSelector((state) => state.messengerBodyReducer.activeChatusr.displayName)
+    const userAvatar = useSelector((state) => state.messengerBodyReducer.activeChatusr.avatarUrl)
     const lastseen = useSelector((state) => state.messengerBodyReducer.activeChatusr.lastseen)
     const logout = () => {
         auth.signOut().then(

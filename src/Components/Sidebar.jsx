@@ -7,7 +7,8 @@ import {FiMenu} from 'react-icons/fi'
 import ActiveMessages from './ActiveMessages'
 import {useSelector, useDispatch} from 'react-redux';
 import {db, auth} from '../firebase'
-import {setUserList} from '../actions/sidebarActions'
+import {setUserList, setActiveMessages} from '../actions/sidebarActions'
+import {setChats} from '../actions/messagePrev.actions'
 
 const Sidebar = (props) => {
     
@@ -23,11 +24,53 @@ const Sidebar = (props) => {
         userlst.forEach(
             usr => {if(usr.id != auth.currentUser.uid){
                 //console.log(usr.id === auth.currentUser.uid)
-                userlistlocal.push(usr.data())
+                userlistlocal.push({ ...usr.data(), uid: usr.id})
             }}
         )
         dispatcher(setUserList(userlistlocal))
+
+        const unsubscribe = db.collection('ActiveChats').where('sender', '==', auth.currentUser.uid).onSnapshot(actvmsgs => 
+        {var activeMessages = Array(0)
+        actvmsgs.forEach(
+            msg => {
+                
+                let temp = msg.data()
+                db.collection('Users').doc(temp.receiver).get().then(receiverSnapshot => receiverSnapshot.data()).then(receiverData => {
+                    console.log(receiverData)
+                    activeMessages.push({
+                    displayName: receiverData.displayName,
+                    avatarUrl: receiverData.avatarUrl,
+                    lastmsg: temp.lastmsg,
+                    timestamp: temp.timestamp.seconds,
+                    uid: temp.receiver
+
+                })}
+                )
+                
+
+                
+
+
+                
+            }
+        )
+        dispatcher(setActiveMessages(activeMessages))}
+    )
+
+    return () => unsubscribe()
+
+        
+
+
     }, [])
+
+
+    const updateChats = async() => {
+        const prevChats = await db.collection('Chats').where('sender' , '==', auth.currentUser.uid).where('receiver', '==', '').orderBy('timestamp').get();
+        const chatarray = []
+        prevChats.forEach((chat) => chatarray.push(chat.data()))
+        dispatcher(setChats(chatarray))
+    }
 
 
     return (
@@ -41,14 +84,14 @@ const Sidebar = (props) => {
                 </div>
                 
                 <div className="menus">
-                    <div className="menu-icons">
-                        <BsSearch onClick={() => {setSearchVisible(!searchVisible)}} size={25}/>
+                    <div onClick={() => {setSearchVisible(!searchVisible)}} className="menu-icons">
+                        <BsSearch  size={25}/>
+                    </div>
+                    <div onClick={() => {newchatref.current.style.width = "30%"}} className="menu-icons">
+                        <BsChatDots  size={25}/>
                     </div>
                     <div className="menu-icons">
-                        <BsChatDots onClick={() => {newchatref.current.style.width = "30%"}} size={25}/>
-                    </div>
-                    <div className="menu-icons">
-                        <BsThreeDotsVertical size={25}/>
+                        <BsThreeDotsVertical onClick={updateChats} size={25}/>
                     </div>
                 </div>
             </div>

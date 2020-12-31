@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {auth, db} from './firebase';
 import { useEffect, useState } from 'react';
 import {setUser} from './actions/Login.actions'
+import {clearallstates} from './actions/Main.actions'
 
 
 
@@ -28,11 +29,13 @@ const App = (props)  => {
       }
       else{
         setDisplay(<Login />)
+        dispatch(clearallstates())
       }
     })
 
     return () => {
       unsubscribe()
+      //db.collection('Users').doc(auth.currentUser.uid).set({})
     };
   }, [])
   
