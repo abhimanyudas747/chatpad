@@ -13,7 +13,7 @@ const Header = (props) => {
     const activeChatusr = useSelector((state) => state.messengerBodyReducer.activeChatusr)
     const fullName = activeChatusr.displayName
     const userAvatar = activeChatusr.avatarUrl
-    const lastseen = activeChatusr.lastseen.seconds
+    const lastseen = activeChatusr.lastseen
     const [trueLastSeen, setTrueLastSeen] = useState('')
 
     useEffect(() => {
@@ -31,14 +31,15 @@ const Header = (props) => {
         //     }
         // })
         // }
-
+        if(activeChatusr.lastseen)
+        {
         if(lastseen === "Online"){
                     setTrueLastSeen("Online")
                 }
                 else{
-                    setTrueLastSeen("last seen on "+utcSecsToLocalTime(lastseen).toString().slice(0,25))
+                    setTrueLastSeen("last seen on "+utcSecsToLocalTime(lastseen.seconds).toString().slice(0,25))
                 }
-        
+        }
 
     }, [activeChatusr])
 
