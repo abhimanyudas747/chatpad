@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import "./msgBox.styles.css";
 import {auth} from '../firebase'
+import {utcSecsToLocalTime} from '../utils'
 
 const MsgBox = (props) =>{
 
@@ -27,7 +28,7 @@ const MsgBox = (props) =>{
             <div className="msgbox" style={{backgroundColor: boxColor(props.sender), float: pos(props.sender)}}>
                 {props.text}
                 <div className="timestamp">
-                    16:32
+                    {utcSecsToLocalTime(props.timestamp).toLocaleTimeString()}
                 </div>
             </div>
            

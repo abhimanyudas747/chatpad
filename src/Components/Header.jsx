@@ -3,17 +3,53 @@ import './Header.styles.css';
 import {Row, Col} from 'react-bootstrap';
 import {connect, useSelector, useDispatch} from 'react-redux';
 import {BiLogOutCircle} from 'react-icons/bi'
-import {auth} from '../firebase'
+import {auth, db} from '../firebase'
 import {setUser} from '../actions/Login.actions'
+import {utcSecsToLocalTime} from '../utils'
+import firebase from 'firebase/app'
 
 const Header = (props) => {
     const dispatch = useDispatch();
-    const fullName = useSelector((state) => state.messengerBodyReducer.activeChatusr.displayName)
-    const userAvatar = useSelector((state) => state.messengerBodyReducer.activeChatusr.avatarUrl)
-    const lastseen = useSelector((state) => state.messengerBodyReducer.activeChatusr.lastseen)
-    const logout = () => {
+    const activeChatusr = useSelector((state) => state.messengerBodyReducer.activeChatusr)
+    const fullName = activeChatusr.displayName
+    const userAvatar = activeChatusr.avatarUrl
+    const lastseen = activeChatusr.lastseen.seconds
+    const [trueLastSeen, setTrueLastSeen] = useState('')
+
+    useEffect(() => {
+
+        console.log(activeChatusr)
+        // if(activeChatusr.uid)
+        // {
+        // db.collection('Users').doc(activeChatusr.uid).get().then(snapshot => snapshot.data())
+        // .then(receiverData => {
+        //     if(receiverData.lastseen === "Online"){
+        //         setTrueLastSeen("Online")
+        //     }
+        //     else{
+        //         setTrueLastSeen("last seen on "+utcSecsToLocalTime(receiverData.lastseen).toString().slice(0,25))
+        //     }
+        // })
+        // }
+
+        if(lastseen === "Online"){
+                    setTrueLastSeen("Online")
+                }
+                else{
+                    setTrueLastSeen("last seen on "+utcSecsToLocalTime(lastseen).toString().slice(0,25))
+                }
+        
+
+    }, [activeChatusr])
+
+
+    const logout = async() => {
+        await db.collection('Users').doc(auth.currentUser.uid).update({lastseen: firebase.firestore.Timestamp.now()})
         auth.signOut().then(
-            () => dispatch(setUser({})),
+            () => {
+                dispatch(setUser({}))
+                
+            },
             () => alert('Logout failed')
         )
     }
@@ -32,7 +68,7 @@ const Header = (props) => {
                                 {fullName}
                             </Col>
                             <Col sm={12}>
-                                {lastseen}
+                                {trueLastSeen}
                             </Col>
                         </Row>
                         

@@ -1,7 +1,11 @@
 const initialState = {
     newChatcomponentref: undefined,
     userList: [],
-    activeMessages: []
+    activeMessages: [
+        {
+            lastmsg: "LOL"
+        }
+    ]
 }
 
 

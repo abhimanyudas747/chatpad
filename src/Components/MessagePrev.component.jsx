@@ -4,6 +4,7 @@ import {Row, Col} from 'react-bootstrap';
 import {useDispatch} from 'react-redux';
 import {setActiveChat, setChats} from '../actions/messagePrev.actions'
 import {db, auth} from '../firebase'
+import {utcSecsToLocalTime} from '../utils'
 
 const MessagePrev = (props) => {
 
@@ -33,7 +34,7 @@ const MessagePrev = (props) => {
                         </Col>
                         <Col sm={4}>
                             <div style={{float: "right"}}>
-                                {props.timestamp}
+                                {utcSecsToLocalTime(props.timestamp).toLocaleTimeString()}
                             </div>
                         </Col>
                     </Row>

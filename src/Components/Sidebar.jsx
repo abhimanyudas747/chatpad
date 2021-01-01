@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import './Sidebar.styles.css'
 import {Button, Row, Col, Form, Collapse} from 'react-bootstrap'
 import {BsSearch, BsChatDots, BsThreeDotsVertical} from 'react-icons/bs'
@@ -9,6 +9,8 @@ import {useSelector, useDispatch} from 'react-redux';
 import {db, auth} from '../firebase'
 import {setUserList, setActiveMessages} from '../actions/sidebarActions'
 import {setChats} from '../actions/messagePrev.actions'
+import newmsgaudio from '../new_msg_notification.mp3'
+
 
 const Sidebar = (props) => {
     
@@ -17,6 +19,7 @@ const Sidebar = (props) => {
     const [searchVisible, setSearchVisible] = useState(true)
     const [searchFocus, setSearchFocus] = useState(false)
     const newchatref = useSelector((state) => state.sidebarReducer.newChatcomponentref)
+    const newMessageNotification = useRef();
     const dispatcher = useDispatch();
     useEffect(async() => {
         var userlistlocal = Array(0)
@@ -29,23 +32,30 @@ const Sidebar = (props) => {
         )
         dispatcher(setUserList(userlistlocal))
 
-        const unsubscribe = db.collection('ActiveChats').where('sender', '==', auth.currentUser.uid).onSnapshot(actvmsgs => 
+        const unsubscribe = db.collection('ActiveChats').where('sender', '==', auth.currentUser.uid).orderBy('timestamp', 'desc').onSnapshot(actvmsgs => 
         {var activeMessages = Array(0)
+        //var play = true;
         actvmsgs.forEach(
             msg => {
+
                 
                 let temp = msg.data()
-                db.collection('Users').doc(temp.receiver).get().then(receiverSnapshot => receiverSnapshot.data()).then(receiverData => {
-                    console.log(receiverData)
-                    activeMessages.push({
+                
+                let msgPromise = db.collection('Users').doc(temp.receiver).get().then(receiverSnapshot => receiverSnapshot.data()).then(receiverData => (
+                   // console.log(receiverData)
+                    {
                     displayName: receiverData.displayName,
                     avatarUrl: receiverData.avatarUrl,
                     lastmsg: temp.lastmsg,
                     timestamp: temp.timestamp.seconds,
-                    uid: temp.receiver
+                    uid: temp.receiver,
+                    owner: temp.owner,
+                    lastseen: receiverData.lastseen
 
-                })}
+                })
                 )
+
+                activeMessages.push(msgPromise)
                 
 
                 
@@ -54,7 +64,20 @@ const Sidebar = (props) => {
                 
             }
         )
-        dispatcher(setActiveMessages(activeMessages))}
+        
+        Promise.all(activeMessages).then(activeMessagesArray => {
+            dispatcher(setActiveMessages(activeMessagesArray))
+            if(activeMessagesArray[0].owner !== auth.currentUser.uid)
+                {
+                    console.log("HERE")
+                    newMessageNotification.current.play()
+                }
+        }
+        )
+        
+
+        
+    }
     )
 
     return () => unsubscribe()
@@ -75,6 +98,9 @@ const Sidebar = (props) => {
 
     return (
         <>
+        <audio ref={newMessageNotification}>
+            <source src={newmsgaudio}></source>
+        </audio>
         <div className="sidebar">
             <div className="menu-list">
 

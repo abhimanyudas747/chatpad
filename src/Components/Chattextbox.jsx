@@ -37,7 +37,15 @@ const Chattextbox = (props) =>
                 receiver: activeChatusr.uid,
                 lastmsg: newmsg.text,
                 timestamp: newmsg.timestamp,
-                sender: auth.currentUser.uid
+                sender: auth.currentUser.uid,
+                owner: auth.currentUser.uid
+            })
+            db.collection('ActiveChats').doc(activeChatusr.uid+auth.currentUser.uid).set({
+                receiver: auth.currentUser.uid,
+                lastmsg: newmsg.text,
+                timestamp: newmsg.timestamp,
+                sender: activeChatusr.uid,
+                owner: auth.currentUser.uid
             })
 
             

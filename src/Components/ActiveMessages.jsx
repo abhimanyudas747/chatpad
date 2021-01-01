@@ -9,13 +9,13 @@ const ActiveMessages = (props) => {
     const activeMessages = useSelector((state) => state.sidebarReducer.activeMessages)
     
 
-    var prevs
+    //var prevs
     
 
 
     useEffect(() => {
 
-    console.log(prevs)    
+    console.log("UPDATED")    
 
     }, [activeMessages])
 
@@ -35,6 +35,7 @@ const ActiveMessages = (props) => {
             <div className="preview-holder">
                 {
                     activeMessages.map(prev => <MessagePrev {...prev} />)
+                   // activeMessages[0].lastmsg
                     
                 }
             </div>

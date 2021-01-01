@@ -7,6 +7,7 @@ import {auth, db} from './firebase';
 import { useEffect, useState } from 'react';
 import {setUser} from './actions/Login.actions'
 import {clearallstates} from './actions/Main.actions'
+import firebase from 'firebase/app'
 
 
 
@@ -24,6 +25,7 @@ const App = (props)  => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if(user){
         console.log(user)
+        db.collection('Users').doc(auth.currentUser.uid).update({lastseen: "Online"})
         dispatch(setUser(user))
         setDisplay(<Main />)
       }
@@ -35,7 +37,7 @@ const App = (props)  => {
 
     return () => {
       unsubscribe()
-      //db.collection('Users').doc(auth.currentUser.uid).set({})
+      db.collection('Users').doc(auth.currentUser.uid).update({lastseen: firebase.firestore.Timestamp.now()})
     };
   }, [])
   
