@@ -70,7 +70,8 @@ const Sidebar = (props) => {
             if(activeMessagesArray[0].owner !== auth.currentUser.uid)
                 {
                     console.log("HERE")
-                    newMessageNotification.current.play()
+                    //newMessageNotification.current.play()
+                    document.getElementById('notif-sound').play()
                 }
         }
         )
@@ -98,9 +99,7 @@ const Sidebar = (props) => {
 
     return (
         <>
-        <audio ref={newMessageNotification}>
-            <source src={newmsgaudio}></source>
-        </audio>
+        
         <div className="sidebar">
             <div className="menu-list">
 
@@ -110,14 +109,14 @@ const Sidebar = (props) => {
                 </div>
                 
                 <div className="menus">
-                    <div onClick={() => {setSearchVisible(!searchVisible)}} className="menu-icons">
+                    <div title="Search active chats" onClick={() => {setSearchVisible(!searchVisible)}} className="menu-icons">
                         <BsSearch  size={25}/>
                     </div>
-                    <div onClick={() => {newchatref.current.style.width = "30%"}} className="menu-icons">
+                    <div title="New Chat" onClick={() => {newchatref.current.style.width = "30%"}} className="menu-icons">
                         <BsChatDots  size={25}/>
                     </div>
-                    <div className="menu-icons">
-                        <BsThreeDotsVertical onClick={updateChats} size={25}/>
+                    <div  className="menu-icons">
+                        <BsThreeDotsVertical size={25}/>
                     </div>
                 </div>
             </div>

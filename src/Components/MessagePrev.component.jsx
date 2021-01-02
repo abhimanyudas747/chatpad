@@ -12,6 +12,7 @@ const MessagePrev = (props) => {
 
     const handleSubmit = async() => {
         dispatch(setActiveChat(props))
+        dispatch(setChats([]))
         // console.log(props)
         // const prevChats = await db.collection('Chats').where('sender' , '==', auth.currentUser.uid).where('receiver', '==', props.uid).orderBy('timestamp').get();
         // const chatarray = []
@@ -34,13 +35,20 @@ const MessagePrev = (props) => {
                         </Col>
                         <Col sm={4}>
                             <div style={{float: "right"}}>
-                                {utcSecsToLocalTime(props.timestamp).toLocaleTimeString()}
+                                {
+                                    props.timestamp ? 
+                                utcSecsToLocalTime(props.timestamp).toLocaleTimeString()
+                                :
+                                undefined
+                                }
                             </div>
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={12}>
+                        <Col sm={10}>
+                            <div className="textholder">
                             {props.lastmsg}
+                            </div>
                         </Col>
                     </Row>
                 </Col>

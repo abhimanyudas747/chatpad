@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import {setUser} from './actions/Login.actions'
 import {clearallstates} from './actions/Main.actions'
 import firebase from 'firebase/app'
+import Zoom from 'react-reveal/Zoom'
 
 
 
@@ -26,6 +27,7 @@ const App = (props)  => {
       if(user){
         console.log(user)
         db.collection('Users').doc(auth.currentUser.uid).update({lastseen: "Online"})
+        
         dispatch(setUser(user))
         setDisplay(<Main />)
       }
@@ -37,7 +39,7 @@ const App = (props)  => {
 
     return () => {
       unsubscribe()
-      db.collection('Users').doc(auth.currentUser.uid).update({lastseen: firebase.firestore.Timestamp.now()})
+      //db.collection('Users').doc(auth.currentUser.uid).update({lastseen: firebase.firestore.Timestamp.now()})
     };
   }, [])
   
@@ -45,9 +47,8 @@ const App = (props)  => {
   
   return (
     <div className="App">
-      
-      {display}
-
+        {display}
+     
     </div>
   );
 }

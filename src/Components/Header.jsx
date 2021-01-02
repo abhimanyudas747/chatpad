@@ -13,8 +13,12 @@ const Header = (props) => {
     const activeChatusr = useSelector((state) => state.messengerBodyReducer.activeChatusr)
     const fullName = activeChatusr.displayName
     const userAvatar = activeChatusr.avatarUrl
-    const lastseen = activeChatusr.lastseen
+    //const lastseen = activeChatusr.lastseen
     const [trueLastSeen, setTrueLastSeen] = useState('')
+
+    var unsubscribe = () => {}
+
+
 
     useEffect(() => {
 
@@ -31,15 +35,35 @@ const Header = (props) => {
         //     }
         // })
         // }
-        if(activeChatusr.lastseen)
-        {
-        if(lastseen === "Online"){
-                    setTrueLastSeen("Online")
-                }
-                else{
-                    setTrueLastSeen("last seen on "+utcSecsToLocalTime(lastseen.seconds).toString().slice(0,25))
-                }
-        }
+
+
+        unsubscribe();
+        unsubscribe = db.collection('Users').doc(activeChatusr.uid).onSnapshot(newSnapshot => {
+            let lastseen = newSnapshot.data().lastseen
+            if(lastseen === "Online"){
+                        setTrueLastSeen("Online")
+                    }
+                    else{
+                        setTrueLastSeen("last seen on "+utcSecsToLocalTime(lastseen.seconds).toString().slice(0,25))
+                    }
+            }
+        )
+
+
+
+
+        // if(activeChatusr.lastseen)
+        // {
+        // if(lastseen === "Online"){
+        //             setTrueLastSeen("Online")
+        //         }
+        //         else{
+        //             setTrueLastSeen("last seen on "+utcSecsToLocalTime(lastseen.seconds).toString().slice(0,25))
+        //         }
+        // }
+
+
+        return () => unsubscribe()
 
     }, [activeChatusr])
 

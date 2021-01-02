@@ -17,3 +17,10 @@
     width: 50px;
     border-radius: 50px;
 }
+
+
+.textholder{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
