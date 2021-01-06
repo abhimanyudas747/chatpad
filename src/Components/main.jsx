@@ -7,7 +7,7 @@ import NewChatComponent from './newChatComponent'
 import {useDispatch, useSelector} from 'react-redux'
 import {clearallstates} from '../actions/Main.actions'
 import DefaultBanner from './defaultBanner'
-import {Zoom} from 'react-reveal'
+import {Fade} from 'react-reveal'
 import newmsgaudio from '../new_msg_notification.mp3'
 
 
@@ -21,7 +21,7 @@ const Main = (props) => {
         <audio id="notif-sound">
             <source src={newmsgaudio}></source>
         </audio>
-        <Zoom>
+        <Fade down>
         <div className="main">
             <Sidebar />
             <NewChatComponent />
@@ -36,7 +36,7 @@ const Main = (props) => {
             
             
         </div>
-        </Zoom>
+        </Fade>
         </>
     )
 }

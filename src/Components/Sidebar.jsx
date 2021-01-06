@@ -1,6 +1,6 @@
-import {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import './Sidebar.styles.css'
-import {Button, Row, Col, Form, Collapse} from 'react-bootstrap'
+import {Button, Row, Col, Form, Collapse, Dropdown} from 'react-bootstrap'
 import {BsSearch, BsChatDots, BsThreeDotsVertical} from 'react-icons/bs'
 import {MdCancel} from 'react-icons/md'
 import {FiMenu} from 'react-icons/fi'
@@ -10,6 +10,7 @@ import {db, auth} from '../firebase'
 import {setUserList, setActiveMessages} from '../actions/sidebarActions'
 import {setChats} from '../actions/messagePrev.actions'
 import newmsgaudio from '../new_msg_notification.mp3'
+import ChangeAvatar from './ChangeAvatar'
 
 
 const Sidebar = (props) => {
@@ -19,8 +20,26 @@ const Sidebar = (props) => {
     const [searchVisible, setSearchVisible] = useState(true)
     const [searchFocus, setSearchFocus] = useState(false)
     const newchatref = useSelector((state) => state.sidebarReducer.newChatcomponentref)
-    const newMessageNotification = useRef();
+    const [showChangeAvatar, setShowChangeAvatar] = useState(true)
+    const dropdownToggle = useRef();
+    //const [showDropdown, setShowDropdown] = useState(false)
     const dispatcher = useDispatch();
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        <a
+            style={{color: "black"}}
+            href=""
+            ref={ref}
+            onClick={(e) => {
+                e.preventDefault();
+                onClick(e);
+            }}
+        >
+            <div  className="menu-icons">
+                <BsThreeDotsVertical size={25}/>
+            </div>
+        </a>
+    ));
+
     useEffect(async() => {
         var userlistlocal = Array(0)
         const userlst = await db.collection('Users').get()
@@ -89,6 +108,8 @@ const Sidebar = (props) => {
     }, [])
 
 
+
+
     const updateChats = async() => {
         const prevChats = await db.collection('Chats').where('sender' , '==', auth.currentUser.uid).where('receiver', '==', '').orderBy('timestamp').get();
         const chatarray = []
@@ -96,10 +117,12 @@ const Sidebar = (props) => {
         dispatcher(setChats(chatarray))
     }
 
+    
+
 
     return (
         <>
-        
+        <ChangeAvatar userAvatar={userAvatar} setShow={setShowChangeAvatar} hidden={showChangeAvatar} />
         <div className="sidebar">
             <div className="menu-list">
 
@@ -115,9 +138,20 @@ const Sidebar = (props) => {
                     <div title="New Chat" onClick={() => {newchatref.current.style.width = "30%"}} className="menu-icons">
                         <BsChatDots  size={25}/>
                     </div>
-                    <div  className="menu-icons">
-                        <BsThreeDotsVertical size={25}/>
-                    </div>
+                    {/* <div  className="menu-icons"> */}
+                        
+                        <Dropdown >
+                            <Dropdown.Toggle  variant="secondary" as={CustomToggle}></Dropdown.Toggle>
+                            <Dropdown.Menu style={{transition: "0.5s"}} align="right">
+                                <Dropdown.Item onClick={() => {setShowChangeAvatar(false)}} href="">Change Avatar</Dropdown.Item>
+                                <Dropdown.Divider />
+                                <Dropdown.Item target="_blank" href="https://github.com/abhimanyudas747/chatpad">See Source</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    
+
+                    {/* </div> */}
+                    
                 </div>
             </div>
             <Collapse in={!searchVisible}>

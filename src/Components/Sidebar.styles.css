@@ -13,7 +13,8 @@
 
 
 .avatar{
-    height: 100%;
+    height: 65px;
+    width: 65px;
     border-radius: 100%;
     padding: 10px;
     float: left;

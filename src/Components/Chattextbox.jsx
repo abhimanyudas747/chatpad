@@ -57,7 +57,7 @@ const Chattextbox = (props) =>
     <div className="chattextbox" >
         <form onSubmit={handleSubmit} style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-around"}}>
             <div className="textbox">
-                <input ref={textboxref} type="text" value={msg} onChange={(e) => {setMsg(e.target.value)}} placeholder="Type a message" style={{width: "100%", height: "100%", background: "none", outline: "none", border: "none"}}/>
+                <input ref={textboxref} id="msgtextbox" type="text" value={msg} onChange={(e) => {setMsg(e.target.value)}} placeholder="Type a message" style={{width: "100%", height: "100%", background: "none", outline: "none", border: "none"}}/>
             </div>
             <BiSend onClick={handleSubmit} size={45}  className="send-button" />
         </form>

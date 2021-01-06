@@ -13,6 +13,10 @@ const MessagePrev = (props) => {
     const handleSubmit = async() => {
         dispatch(setActiveChat(props))
         dispatch(setChats([]))
+        if(document.getElementById("msgtextbox"))
+        {
+        document.getElementById("msgtextbox").focus()
+        }
         // console.log(props)
         // const prevChats = await db.collection('Chats').where('sender' , '==', auth.currentUser.uid).where('receiver', '==', props.uid).orderBy('timestamp').get();
         // const chatarray = []
