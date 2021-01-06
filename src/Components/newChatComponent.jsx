@@ -5,7 +5,7 @@ import {Button, Row, Col, Form, Collapse} from 'react-bootstrap'
 import {BsSearch, BsChatDots, BsThreeDotsVertical} from 'react-icons/bs'
 import {MdCancel} from 'react-icons/md'
 import {ImCancelCircle} from 'react-icons/im'
-import {setNewChatRef} from '../actions/sidebarActions'
+import {setNewChatRef, setUserSearchQuery} from '../actions/sidebarActions'
 import ActiveMessages from './ActiveMessages'
 
 
@@ -50,7 +50,7 @@ const NewChatComponent = (props) => {
                             <BsSearch hidden={searchFocus} />
                         </Col>
                         <Col sm={10}>
-                            <input type="text" onFocus={() => {setSearchFocus(true)}} onBlur={() => {setSearchFocus(false)}} style={{width: "100%", "background": "none", border: "none", outline: "none"}} placeholder="Search Users" />
+                            <input type="text" onChange={(e) => {dispatch(setUserSearchQuery(e.target.value))}} onFocus={() => {setSearchFocus(true)}} onBlur={() => {setSearchFocus(false)}} style={{width: "100%", "background": "none", border: "none", outline: "none"}} placeholder="Search Users" />
                         </Col>
                     </Row>
                 

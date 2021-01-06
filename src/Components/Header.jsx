@@ -3,7 +3,7 @@ import './Header.styles.css';
 import {Row, Col} from 'react-bootstrap';
 import {connect, useSelector, useDispatch} from 'react-redux';
 import {BiLogOutCircle} from 'react-icons/bi'
-import {auth, db} from '../firebase'
+import {auth, db, provider} from '../firebase'
 import {setUser} from '../actions/Login.actions'
 import {utcSecsToLocalTime} from '../utils'
 import firebase from 'firebase/app'
@@ -73,6 +73,7 @@ const Header = (props) => {
         auth.signOut().then(
             () => {
                 dispatch(setUser({}))
+                
                 
             },
             () => alert('Logout failed')

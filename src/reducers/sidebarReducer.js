@@ -3,7 +3,9 @@ const initialState = {
     userList: [],
     activeMessages: [
         
-    ]
+    ],
+    usersearchquery: "",
+    chatsearchquery: ""
 }
 
 
@@ -30,9 +32,22 @@ const sidebarReducer = (state = initialState, action) => {
 
         case 'CLEAR_ALL_STATES':
             return {
+                ...state,
                 newChatcomponentref: undefined,
                 userList: [],
                 activeMessages: []
+            }
+
+        case 'SET_USERSEARCHQUERY':
+            return {
+                ...state,
+                usersearchquery: action.usersearchquery
+            }
+
+        case 'SET_CHATSEARCHQUERY':
+            return {
+                ...state,
+                chatsearchquery: action.chatsearchquery
             }
         
         default:

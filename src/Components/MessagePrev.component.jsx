@@ -5,11 +5,31 @@ import {useDispatch} from 'react-redux';
 import {setActiveChat, setChats} from '../actions/messagePrev.actions'
 import {db, auth} from '../firebase'
 import {utcSecsToLocalTime} from '../utils'
+import firebase from 'firebase/app'
+
 
 const MessagePrev = (props) => {
 
     const dispatch = useDispatch();
+    //console.log(firebase.firestore.Timestamp.now().seconds)
+    const timediff = firebase.firestore.Timestamp.now().seconds - props.timestamp
+    const [timestamp, setTimestamp] = useState()
 
+    useEffect(() => {
+        if(timediff > 86400)
+    {
+        setTimestamp(utcSecsToLocalTime(props.timestamp).toString().slice(0,3))
+    }
+    else if(timediff > 604800)
+    {
+        setTimestamp(utcSecsToLocalTime(props.timestamp).toString().slice(4,14))
+    }
+    else{
+        setTimestamp(utcSecsToLocalTime(props.timestamp).toLocaleTimeString())
+    }
+    }, [])
+
+    
     const handleSubmit = async() => {
         dispatch(setActiveChat(props))
         dispatch(setChats([]))
@@ -41,7 +61,8 @@ const MessagePrev = (props) => {
                             <div style={{float: "right"}}>
                                 {
                                     props.timestamp ? 
-                                utcSecsToLocalTime(props.timestamp).toLocaleTimeString()
+                                // utcSecsToLocalTime(props.timestamp).toLocaleTimeString()
+                                timestamp
                                 :
                                 undefined
                                 }

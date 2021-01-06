@@ -38,6 +38,16 @@ const Login = (props) => {
 
     }
 
+    const signInWithGoogle = (e) => {
+        auth.signInWithPopup(provider).then(res => res.user).then(user => {
+            db.collection('Users').doc(user.uid).set({
+                email: user.email,
+                displayName: user.displayName,
+                avatarUrl: user.photoURL
+            })
+        })
+    }
+
     const handleSubmitsignup = (e) => {
         e.preventDefault();
         auth.createUserWithEmailAndPassword(email, pwd)
@@ -110,7 +120,7 @@ const Login = (props) => {
                         <Form.Control type="password" required onChange={(e) => {setPwd(e.target.value)}} placeholder="Password" /><br></br>
                         <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
                             <Button variant="primary" type="submit" style={{width: "20%", marginRight: "1%"}}>Login</Button>
-                            <Button variant="primary" onClick={() => {auth.signInWithPopup(provider)}} style={{width: "40%", marginLeft: "1%"}}>Login with Google</Button>
+                            <Button variant="primary" onClick={signInWithGoogle} style={{width: "40%", marginLeft: "1%"}}>Login with Google</Button>
                         </div>
                     </Form>
             

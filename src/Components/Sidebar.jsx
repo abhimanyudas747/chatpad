@@ -7,10 +7,12 @@ import {FiMenu} from 'react-icons/fi'
 import ActiveMessages from './ActiveMessages'
 import {useSelector, useDispatch} from 'react-redux';
 import {db, auth} from '../firebase'
-import {setUserList, setActiveMessages} from '../actions/sidebarActions'
+import {setUserList, setActiveMessages, setChatSearchQuery, setUserSearchQuery} from '../actions/sidebarActions'
 import {setChats} from '../actions/messagePrev.actions'
 import newmsgaudio from '../new_msg_notification.mp3'
 import ChangeAvatar from './ChangeAvatar'
+import {setUser} from '../actions/Login.actions'
+import firebase from 'firebase/app'
 
 
 const Sidebar = (props) => {
@@ -86,12 +88,15 @@ const Sidebar = (props) => {
         
         Promise.all(activeMessages).then(activeMessagesArray => {
             dispatcher(setActiveMessages(activeMessagesArray))
-            if(activeMessagesArray[0].owner !== auth.currentUser.uid)
-                {
-                    console.log("HERE")
-                    //newMessageNotification.current.play()
-                    document.getElementById('notif-sound').play()
-                }
+            if(activeMessagesArray.length)
+            {
+                if(activeMessagesArray[0].owner !== auth.currentUser.uid)
+                    {
+                        console.log("HERE")
+                        //newMessageNotification.current.play()
+                        document.getElementById('notif-sound').play()
+                    }
+            }
         }
         )
         
@@ -108,6 +113,16 @@ const Sidebar = (props) => {
     }, [])
 
 
+    const logout = async() => {
+        await db.collection('Users').doc(auth.currentUser.uid).update({lastseen: firebase.firestore.Timestamp.now()})
+        auth.signOut().then(
+            () => {
+                dispatcher(setUser({}))
+                
+            },
+            () => alert('Logout failed')
+        )
+    }
 
 
     const updateChats = async() => {
@@ -144,6 +159,7 @@ const Sidebar = (props) => {
                             <Dropdown.Toggle  variant="secondary" as={CustomToggle}></Dropdown.Toggle>
                             <Dropdown.Menu style={{transition: "0.5s"}} align="right">
                                 <Dropdown.Item onClick={() => {setShowChangeAvatar(false)}} href="">Change Avatar</Dropdown.Item>
+                                <Dropdown.Item onClick={logout} href="">Logout</Dropdown.Item>
                                 <Dropdown.Divider />
                                 <Dropdown.Item target="_blank" href="https://github.com/abhimanyudas747/chatpad">See Source</Dropdown.Item>
                             </Dropdown.Menu>
@@ -164,7 +180,7 @@ const Sidebar = (props) => {
                                     <BsSearch hidden={searchFocus} />
                                 </Col>
                                 <Col sm={10}>
-                                    <input type="text" onFocus={() => {setSearchFocus(true)}} onBlur={() => {setSearchFocus(false)}} style={{width: "100%", "background": "none", border: "none", outline: "none"}} placeholder="Search chats" />
+                                    <input type="text" onChange={(e) => {dispatcher(setChatSearchQuery(e.target.value))}} onFocus={() => {setSearchFocus(true)}} onBlur={() => {setSearchFocus(false)}} style={{width: "100%", "background": "none", border: "none", outline: "none"}} placeholder="Search chats" />
                                 </Col>
                             </Row>
                         

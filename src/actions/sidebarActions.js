@@ -18,3 +18,18 @@ export const setActiveMessages = (activeMessages) =>{
         activeMessages: activeMessages
     })
 }
+
+
+export const setUserSearchQuery = (query) => {
+    return ({
+        type: "SET_USERSEARCHQUERY",
+        usersearchquery: query
+    })
+}
+
+export const setChatSearchQuery = (query) => {
+    return ({
+        type: "SET_CHATSEARCHQUERY",
+        chatsearchquery: query
+    })
+}
