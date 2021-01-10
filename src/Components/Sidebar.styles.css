@@ -9,6 +9,7 @@
     height: 7%;
     background-color: bisque;
     min-height: 60px;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 
@@ -27,6 +28,7 @@
     justify-content: space-around;
     align-items: center;
     width: 35%;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 .search-holder{

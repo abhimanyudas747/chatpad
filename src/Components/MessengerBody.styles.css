@@ -4,4 +4,5 @@
     float: right;
     background-color: rgb(19, 133, 95, 0);
     flex-flow: column;
+    display: flex
 }

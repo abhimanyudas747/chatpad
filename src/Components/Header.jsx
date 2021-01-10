@@ -93,7 +93,7 @@ const Header = (props) => {
                             <Col sm={12} style={{fontWeight: "800", fontSize: "16px"}}>
                                 {fullName}
                             </Col>
-                            <Col sm={12}>
+                            <Col style={{fontFamily: "arial", fontSize: "15px"}} sm={12}>
                                 {trueLastSeen}
                             </Col>
                         </Row>
