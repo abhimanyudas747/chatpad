@@ -3,13 +3,13 @@
     overflow-y: scroll;
     max-height: 93%;
     width: 100%;
-    background-color: coral;
+    background-color: rgb(255, 127, 80, 0);
     
 }
 
 .preview-holder::-webkit-scrollbar{
-    background: white;
-    width: 5px;
+    background: rgb(255, 255, 255, 0);
+    width: 3px;
 }
 
 .preview-holder::-webkit-scrollbar-thumb{

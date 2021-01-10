@@ -1,11 +1,12 @@
 .login{
     height: fit-content;
     width: 30%;
-    background-color: thistle;
+    background-color: rgba(236, 232, 240, 0.336);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0px 0px 25px 1px black;
+    border-radius: 5px;
     
 
 }
@@ -21,7 +22,7 @@ FormControl{
 
 .signuplink{
     margin-top: 10px;
-    color: rgb(102, 114, 201);
+    color: rgb(71, 79, 138);
     font-weight: 500;
 }
 

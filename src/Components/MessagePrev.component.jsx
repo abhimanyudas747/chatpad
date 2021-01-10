@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import './MessagePrev.styles.css';
 import {Row, Col} from 'react-bootstrap';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setActiveChat, setChats} from '../actions/messagePrev.actions'
 import {db, auth} from '../firebase'
 import {utcSecsToLocalTime} from '../utils'
@@ -14,6 +14,8 @@ const MessagePrev = (props) => {
     //console.log(firebase.firestore.Timestamp.now().seconds)
     const timediff = firebase.firestore.Timestamp.now().seconds - props.timestamp
     const [timestamp, setTimestamp] = useState()
+    const [bg, setBg] = useState('rgb(240, 255, 255, 0.5)');
+    const activeChatusr = useSelector((state) => state.messengerBodyReducer.activeChatusr)
 
     useEffect(() => {
         if(timediff > 86400)
@@ -28,6 +30,16 @@ const MessagePrev = (props) => {
         setTimestamp(utcSecsToLocalTime(props.timestamp).toLocaleTimeString())
     }
     }, [])
+
+
+    useEffect(() => {
+        if(activeChatusr.uid === props.uid){
+            setBg('rgb(240, 255, 255, 0.8)')
+        }
+        else{
+            setBg('rgb(240, 255, 255, 0.5)')
+        }
+    }, [activeChatusr])
 
     
     const handleSubmit = async() => {
@@ -47,7 +59,7 @@ const MessagePrev = (props) => {
 
     return (
         <>
-        <div onClick={handleSubmit} className="message-prev">
+        <div onClick={handleSubmit} className="message-prev" style={{backgroundColor: bg}}>
             <Row style={{height: "100%"}}>
                 <Col sm={2}>
                     <img src={props.avatarUrl} className="avatar-img" />
