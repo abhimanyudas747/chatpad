@@ -56,7 +56,8 @@ const Login = (props) => {
                 if(uploadbtn.current.value == ''){
                     auth.currentUser.updateProfile({
                         displayName: name,
-                        photoURL: avatar
+                        photoURL: avatar,
+                        lastseen: "Online"
                     })
                     .then(() => {
                         dispatch(setUser(auth.currentUser));
